@@ -7,10 +7,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## spatial_search_in_solr
-Use spatial search to count the total number of my users. Edit
-
-
 ## 作用
 [解决的是什么问题？请看这个](https://stackoverflow.com/questions/43991673/use-spatial-search-to-count-the-total-number-of-my-users)
 
