@@ -1,0 +1,134 @@
+swagger: '2.0'
+info:
+  description: 操作Solr的api
+  version: 1.0.0
+  title: Solr
+  termsOfService: 'http://solr.www.com'
+  contact:
+    email: 99999r00t@gmail.com
+host: solr.www.com
+basePath: /zh-CN/api/v1/
+tags:
+  - name: query
+    description: 地图搜索
+schemes:
+  - http
+paths:
+  /query:
+    post:
+      tags:
+        - query
+      summary: 查询功能
+      description: 请查看模型，示例进行数据的请求
+      operationId: query
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: pt
+          in: formData
+          description: '圆的中心点的经纬度:29.37502725,113.3606975'
+          required: true
+          type: string
+        - name: leftLl
+          in: formData
+          description: '左上角经纬度:格式是纬度,经度:29.834464,111.864299'
+          required: true
+          type: string
+        - name: d
+          in: formData
+          description: '查找多大范围内的用户(km):1234'
+          required: true
+          type: number
+        - name: rightLl
+          in: formData
+          description: '右下角经纬度:格式是纬度,经度:29.83277,111.862818'
+          required: true
+          type: string
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/query_common'
+          description: >-
+            {"data":[{"center":"29.834252,111.864113","count":14},{"center":"29.834252,111.863743","count":14},{"center":"29.834252,111.863373","count":14},{"center":"29.834252,111.863002","count":14},{"center":"29.833828,111.864113","count":14},{"center":"29.833828,111.863743","count":14},{"center":"29.833828,111.863373","count":14},{"center":"29.833828,111.863002","count":14},{"center":"29.833405,111.864113","count":14},{"center":"29.833405,111.863743","count":14},{"center":"29.833405,111.863373","count":14},{"center":"29.833405,111.863002","count":14},{"center":"29.832981,111.864113","count":14},{"center":"29.832981,111.863743","count":14},{"center":"29.832981,111.863373","count":14},{"center":"29.832981,111.863002","count":14}],"code":0,"msg":"\u64cd\u4f5c\u6210\u529f"}
+  /update:
+    post:
+      tags:
+        - query
+      summary: 更新用户的经纬度功能
+      description: 请查看模型，示例进行数据的请求
+      operationId: update
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: phone
+          in: formData
+          description: '用户的手机号码:13888888888'
+          required: true
+          type: integer
+          maxLength: 11
+          minLength: 11
+        - name: location
+          in: formData
+          description: '用户目前的经纬度坐标:格式是纬度,经度:29.834464,111.864299'
+          required: true
+          type: string
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/update'
+          description: >-
+            {
+              "data": [],
+              "code": 0,
+              "msg": "操作成功"
+            }
+definitions:
+  query:
+    type: object
+    required:
+      - center
+      - count
+    properties:
+      center:
+        type: string
+        example: '29.834252,111.863373'
+      count:
+        type: integer
+        example: 1234
+  query_common:
+    type: object
+    required:
+      - data
+      - code
+      - msg
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/query'
+      code:
+        type: number
+        example: 0
+      msg:
+        type: string
+        example: 操作成功
+  update:
+    type: object
+    required:
+      - code
+      - msg
+      - data
+    properties:
+      data:
+        type: array
+        example: []
+      code:
+        type: number
+        example: 0
+      msg:
+        type: string
+        example: 操作成功

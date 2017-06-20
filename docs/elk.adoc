@@ -1,0 +1,33 @@
+== 初始化
+
+* 安装docker
+
+https://store.docker.com/editions/community/docker-ce-server-centos[官方安装手册]
+
+link:files/Nginx-filebeat.zip[filebeat-nginx压缩包]
+
+解压后进入里面执行：
+
+filebeat-nginx编译docker image：docker build -t filebeat-nginx .
+
+docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -d -it -e MAX_MAP_COUNT=262144 --name elk sebp/elk:540
+
+
+
+docker run -p 85:80 -d -it --link elk --name filebeat-nginx filebeat-nginx
+
+
+filebeat-*    (Kibana Web 需要配置的前缀，并且选中timestamp)
+
+
+5601（Kibana Web界面）。
+9200（Elasticsearch JSON接口）。
+5044（Logstash Beats界面，从Beats（如Filebeat）接收日志 - 请参阅
+85（nginx)
+
+
+
+//如需要登录shell
+docker exec -it --privileged -u root elk /bin/bash
+
+

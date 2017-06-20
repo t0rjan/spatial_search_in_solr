@@ -1,0 +1,53 @@
+image::https://circleci.com/gh/spring-cloud/spring-cloud-config/tree/master.svg?style=svg["CircleCI", link="https://circleci.com/gh/spring-cloud/spring-cloud-config/tree/master"]
+image::https://api.codacy.com/project/badge/Grade/f064024a072c477e97dca6ed5a70fccd?branch=master["Codacy code quality", link="https://www.codacy.com/app/Spring-Cloud/spring-cloud-config?branch=master&utm_source=github.com&utm_medium=referral&utm_content=spring-cloud/spring-cloud-config&utm_campaign=Badge_Grade"]
+
+== 初始化
+
+* 安装docker
+
+https://store.docker.com/editions/community/docker-ce-server-centos[官方安装手册]
+
+
+solr.zip是我打包的solr配置文件:位置在于link:files/solr.zip[solr配置文件]
+
+
+[source,bash]
+----
+➜  ~ root  docker run --name solr -d -p 8983:8983 -t  solr:6.5.1
+
+➜  ~ root  unzip ./solr.zip
+
+➜  ~ root  mv ./solr /opt
+
+➜  ~ root  mv ./mysql-connector-java-5.1.42-bin.jar /opt/solr
+----
+
+* 修改配置文件
+
+db-data-config.xml 中的配置需要根据你自己的情况去进行修改.
+
+[source,bash]
+----
+➜  ~ root  docker cp /opt/solr solr:/opt/solr/server
+
+➜   root  docker exec -it --privileged -u root solr /bin/bash
+
+root@9e341b57f8e3:/opt/solr# chown solr:solr ./server/ -R
+
+
+root@9e341b57f8e3:/opt/solr$ cd ./server/solr
+
+root@9e341b57f8e3:/opt/solr/server/solr$ mv ./mysql-connector-java-5.1.42-bin.jar ../../contrib/dataimporthandler-extras/lib/
+
+
+root@9e341b57f8e3:~# exit
+
+----
+
+* 重启docker solr 服务
+
+[source,bash]
+----
+  ➜  ~ root docker restart solr
+----
+
