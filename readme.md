@@ -16,6 +16,8 @@
 
 ### Code
 
+```
+
 <?php
 
 namespace App\Http\Controllers;
@@ -230,3 +232,5 @@ class SolariumController extends Controller
         //endregion
     }
 }
+
+```
