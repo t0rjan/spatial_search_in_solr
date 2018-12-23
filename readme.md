@@ -8,7 +8,7 @@
 </p>
 
 ## Question
-[stackoverflow:](https://stackoverflow.com/questions/43991673/use-spatial-search-to-count-the-total-number-of-my-users)
+[stackoverflow](https://stackoverflow.com/questions/43991673/use-spatial-search-to-count-the-total-number-of-my-users)
 
 
 
